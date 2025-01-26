@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonatal TPN Calculator [Doaa Ramadan]</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="icon" type="image/png" href="C:\Users\97156\Desktop\html\Calculator.png">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-style/dist/xlsx-style.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+
+
+    
+
+</head>
+<body>
+
+
+
+    <div class="container">
+        <h1>Neonatal TPN Calculator</h1>
+        <h2 class="doaa">Developed By: Doaa Ramadan</h2>
+
+        <div class="calculator-table">
+
+            <hr>
+            
+            <div class="row">
+                <div class="label">Patient Name</div>
+                <input type="text" id="patientName" placeholder="Enter name">
+            </div>
+
+            <hr>
+            
+            <div class="row">
+                <div class="label">Day</div>
+                <input type="text" id="day" placeholder="Enter day">
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="label">MRN</div>
+                <input type="number" id="mrn" placeholder="Enter mrn">
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="label">Rout</div>
+                <select id="rout">
+                    <option value=""disabled selected>Select Rout</option>
+                    <option value="Central">Central</option>
+                    <option value="Peripheral">Peripheral</option>
+                </select>
+            </div>
+            
+
+            <hr>
+            
+            
+            
+            
+            <!-- Row: Weight -->
+            <div class="row">
+                <div class="label">Weight</div>
+                <input type="number" id="weight" placeholder="Enter value (kg)">
+            </div>
+
+
+            <hr>
+
+
+             <!-- lipid tube -->
+             <div class="row">
+                <div class="label">Lipid IV Set Tube Length</div>
+                <input type="number" id="lipidlength" placeholder="Enter value (cm)">
+            </div>
+
+            <hr>
+
+             <!-- water tube -->
+             <div class="row">
+                <div class="label">Aqueous IV Set Tube Length</div>
+                <input type="number" id="aqulength" placeholder="Enter value (cm)">
+            </div>
+
+            <hr>
+
+            <!-- Row: TPN Volume -->
+            <div class="row">
+                <div class="label">TPN Volume</div>
+                <input type="number" id="tpn" placeholder="Enter value (ml/kg)">
+                <button onclick="calculateTpn()">Calculate</button>
+                <span id="tpnResult"></span>
+            </div>
+
+            <hr>
+
+            <!-- Row: Vitalipids -->
+            <div class="row">
+                <div class="label">Vitalipids</div>
+                <input type="number" id="vitalipids" placeholder="Enter value (ml/kg)">
+            </div>
+
+
+            <div class="row">
+                <div class="label2">Dose (ml):</div>
+                <button onclick="calculateVitaDose()">Calculate</button>
+                <span id="vitadose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateVitavolume()">Calculate</button>
+                <span id="vitavolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateVitavolumepriming()">Calculate</button>
+                <span id="vitavolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateVitatotal()">Calculate</button>
+                <span id="vitatotal"></span>
+            </div>
+
+            <hr>
+                
+
+            <!-- Row: Intralipids -->
+            <div class="row">
+                <div class="label">Intralipids 20%</div>
+                <input type="number" id="intralipids" placeholder="Enter value (gm/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Intralipids Brands:</div>
+                <select id="intralipidsbrands">
+                    <option value="" disabled selected>Select Brand</option>
+                    <option value="Intralipids2">Intralipids 20%</option>
+                    <option value="Smoflipid">Smoflipid 20%</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (gm):</div>
+                <button onclick="calculateIntraDose()">Calculate</button>
+                <span id="intradose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateIntravolume()">Calculate</button>
+                <span id="intravolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateIntravolumepriming()">Calculate</button>
+                <span id="intravolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateIntratotal()">Calculate</button>
+                <span id="intratotal"></span>
+            </div>
+
+
+            <hr>
+
+            <!-- Row: Lipid Total -->
+            <div class="row">
+                <div class="label">Total Lipids</div>
+            </div>
+
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateLipidvolume()">Calculate</button>
+                <span id="lipidvolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateLipidvolumepriming()">Calculate</button>
+                <span id="lipidvolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateLipidtotal()">Calculate</button>
+                <span id="lipidtotal"></span>
+            </div>
+
+            <hr>
+
+            <!-- Row: Aqua Total -->
+            <div class="row">
+                <div class="label">Aqueous Volume</div>
+            </div>
+
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateAqvolume()">Calculate</button>
+                <span id="aqvolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateAqvolumepriming()">Calculate</button>
+                <span id="aqvolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateAqtotal()">Calculate</button>
+                <span id="aqtotal"></span>
+            </div>
+
+            <hr>
+
+
+            <div class="row">
+                <div class="label">Lipids Priming Factor</div>
+                <button onclick="calculateLipidfactor()">Calculate</button>
+                <span id="Lipidfactor"></span>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="label">Aqueous Priming Factor</div>
+                <button onclick="calculateAqfactor()">Calculate</button>
+                <span id="Aqfactor"></span>
+            </div>
+
+            <hr>
+
+            <!-- Row: Aminoacids Total -->
+            <div class="row">
+                <div class="label">Aminoacids 10%</div>
+                <input type="number" id="aminoacids" placeholder="Enter value (g/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (gm):</div>
+                <button onclick="calculateAminoaDose()">Calculate</button>
+                <span id="aminodose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateaminovolume()">Calculate</button>
+                <span id="aminovolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateAminovolumepriming()">Calculate</button>
+                <span id="aminovolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateAminototal()">Calculate</button>
+                <span id="aminototal"></span>
+            </div>
+
+            <hr>
+
+            <!-- Row: Dextrose Total -->
+            <div class="row">
+                <div class="label">Dextrose 50%</div>
+                <input type="number" id="dextrose" placeholder="Enter value (g/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (gm):</div>
+                <button onclick="calculateDexaDose()">Calculate</button>
+                <span id="dexdose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateDexvolume()">Calculate</button>
+                <span id="dexvolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateDexvolumepriming()">Calculate</button>
+                <span id="dexvolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateDextotal()">Calculate</button>
+                <span id="dextotal"></span>
+            </div>
+            
+
+            <hr>
+
+            <div class="row">
+                <div class="label">Sodium Chloride</div>
+                <input type="number" id="nacl" placeholder="Enter value (mmol/kg)">
+            </div>
+
+            
+            <!-- Sodium Chloride Strength -->
+             <div class="row">
+                <div class="label2">Sodium Chloride Strength:</div>
+                <select id="sodiumChlorideStrength">
+                    <option value="" disabled selected>Select Strength</option>
+                    <option value="20%">20%</option>
+                    <option value="3%">3%</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (gm):</div>
+                <button onclick="calculateNACLDose()">Calculate</button>
+                <span id="nacldose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateNACLvolume()">Calculate</button>
+                <span id="naclvolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateNACLvolumepriming()">Calculate</button>
+                <span id="naclvolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateNACLtotal()">Calculate</button>
+                <span id="nacltotal"></span>
+            </div>
+            
+
+
+            <hr>
+                
+            <!-- Sodium Acetate -->
+             <div class="row">
+                <div class="label">Sodium Acetate</div>
+                <input type="number" id="sodiumAcetate" placeholder="Enter value (mmol/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (mmol):</div>
+                <button onclick="calculateNacetateaDose()">Calculate</button>
+                <span id="nacetatedose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateNacetatevolume()">Calculate</button>
+                <span id="nacetatevolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateNacetatevolumepriming()">Calculate</button>
+                <span id="nacetatevolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateNacetatetotal()">Calculate</button>
+                <span id="nacetatetotal"></span>
+            </div>
+            
+
+
+
+            <hr>
+
+
+              <!-- Sodium Phosphate -->
+              <div class="row">
+                <div class="label">Sodium Phosphate</div>
+                <input type="number" id="sodiumPhosphate" placeholder="Enter value (mmol/kg)">
+            </div>
+
+            <!-- Na phosphate Brand -->
+             <div class="row">
+                <div class="label2">Sodium Phosphate Brand:</div>
+                <select id="sodiumPhosphateBrand">
+                    <option value="" disabled selected>Select Brand</option>
+                    <option value="Glucophos">Glucophos</option>
+                    <option value="Phocytan">Phocytan</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (mmol):</div>
+                <button onclick="calculateNaphosphateDose()">Calculate</button>
+                <span id="naphosphatedose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculateNaphosphatevolume()">Calculate</button>
+                <span id="naphosphatevolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculateNaphosphatevolumepriming()">Calculate</button>
+                <span id="naphosphatevolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculateNaphosphatetotal()">Calculate</button>
+                <span id="naphosphatetotal"></span>
+            </div>
+            
+            <hr>
+            
+            <!-- kcl -->
+             <div class="row">
+                <div class="label">Potassium Chloride 15%</div>
+                <input type="number" id="potassiumChloride" placeholder="Enter value (mmol/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (mmol):</div>
+                <button onclick="calculatekclDose()">Calculate</button>
+                <span id="kcldose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculatekclvolume()">Calculate</button>
+                <span id="kclvolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculatekclvolumepriming()">Calculate</button>
+                <span id="kclvolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculatekcltotal()">Calculate</button>
+                <span id="kcltotal"></span>
+            </div>
+
+
+
+            <hr>
+            
+            <!-- Ca -->
+             <div class="row">
+                <div class="label">Calcium Gluconate 10%</div>
+                <input type="number" id="calciumGluconate" placeholder="Enter value (meq/kg)">
+            </div>
+
+            <div class="row">
+                <div class="label2">Dose (meq):</div>
+                <button onclick="calculatecaDose()">Calculate</button>
+                <span id="cadose"></span>
+            </div>
+            
+            <div class="row">
+                <div class="label2">Volume (ml):</div>
+                <button onclick="calculatecavolume()">Calculate</button>
+                <span id="cavolume"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Volume for Priming (ml):</div>
+                <button onclick="calculatecavolumepriming()">Calculate</button>
+                <span id="cavolumepriming"></span>
+            </div>
+                
+            <div class="row">
+                <div class="label2">Total Volume (ml):</div>
+                <button onclick="calculatecatotal()">Calculate</button>
+                <span id="catotal"></span>
+            </div>
+
+            <hr>
+            
+
+            <div class="row">
+                <div class="label">Magnesium Sulphate 50%</div>
+                <input type="number" id="mg" placeholder="Enter value (mmol/kg)">
+               </div>
+
+               <div class="row">
+                   <div class="label2">Dose (mmol):</div>
+                   <button onclick="calculateMgsulphateDose()">Calculate</button>
+                   <span id="mgsulphatedose"></span>
+               </div>
+               
+               <div class="row">
+                   <div class="label2">Volume (ml):</div>
+                   <button onclick="calculateMgsulphatevolume()">Calculate</button>
+                   <span id="mgsulphatevolume"></span>
+               </div>
+                   
+               <div class="row">
+                   <div class="label2">Volume for Priming (ml):</div>
+                   <button onclick="calculateMgsulphatevolumepriming()">Calculate</button>
+                   <span id="Mgsulphatevolumepriming"></span>
+               </div>
+                   
+               <div class="row">
+                   <div class="label2">Total Volume (ml):</div>
+                   <button onclick="calculateMgsulphatetotal()">Calculate</button>
+                   <span id="mgsulphatetotal"></span>
+               </div>
+               
+            <hr>
+
+            <!-- Heparin -->
+             <div class="row">
+                 <div class="label">Heparin</div>
+                 <input type="number" id="heparin" placeholder="Enter value (unit/kg)">
+                </div>
+
+                <div class="row">
+                    <div class="label2">Dose (unit):</div>
+                    <button onclick="calculateheparinDose()">Calculate</button>
+                    <span id="heparindose"></span>
+                </div>
+                
+                <div class="row">
+                    <div class="label2">Volume (ml):</div>
+                    <button onclick="calculateheparinvolume()">Calculate</button>
+                    <span id="heparinvolume"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Volume for Priming (ml):</div>
+                    <button onclick="calculateheparinvolumepriming()">Calculate</button>
+                    <span id="heparinvolumepriming"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Total Volume (ml):</div>
+                    <button onclick="calculateheparintotal()">Calculate</button>
+                    <span id="heparintotal"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- Multivitamins -->
+                 <div class="row">
+                    <div class="label">Multivitamins</div>
+                    <input type="number" id="multivitamins" placeholder="Enter value (ml/kg)">
+                </div>
+
+                <div class="row">
+                    <div class="label2">Dose (ml):</div>
+                    <button onclick="calculateMultiDose()">Calculate</button>
+                    <span id="multiedose"></span>
+                </div>
+                
+                <div class="row">
+                    <div class="label2">Volume (ml):</div>
+                    <button onclick="calculatemultivolume()">Calculate</button>
+                    <span id="multivolume"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Volume for Priming (ml):</div>
+                    <button onclick="calculatemultivolumepriming()">Calculate</button>
+                    <span id="multivolumepriming"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Total Volume (ml):</div>
+                    <button onclick="calculatemultitotal()">Calculate</button>
+                    <span id="multitotal"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- Trace Elements -->
+                 <div class="row">
+                    <div class="label">Trace Elements</div>
+                    <input type="number" id="traceElements" placeholder="Enter value (mg/kg)">
+                </div>
+
+                <div class="row">
+                    <div class="label2">Dose (ml):</div>
+                    <button onclick="calculatetraceDose()">Calculate</button>
+                    <span id="tracedose"></span>
+                </div>
+                
+                <div class="row">
+                    <div class="label2">Volume (ml):</div>
+                    <button onclick="calculatetracevolume()">Calculate</button>
+                    <span id="tracevolume"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Volume for Priming (ml):</div>
+                    <button onclick="calculatetracevolumepriming()">Calculate</button>
+                    <span id="tracevolumepriming"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Total Volume (ml):</div>
+                    <button onclick="calculatetracetotal()">Calculate</button>
+                    <span id="tracetotal"></span>
+                </div>
+                
+
+
+                <hr>
+
+
+                <!-- Sterile Water -->
+                 <div class="row">
+                    <div class="label">Sterile Water</div>
+                </div>
+                
+                <div class="row">
+                    <div class="label2">Volume (ml):</div>
+                    <button onclick="calculatesterilevolume()">Calculate</button>
+                    <span id="sterilevolume"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Volume for Priming (ml):</div>
+                    <button onclick="calculatesterilevolumepriming()">Calculate</button>
+                    <span id="sterilevolumepriming"></span>
+                </div>
+                    
+                <div class="row">
+                    <div class="label2">Total Volume (ml):</div>
+                    <button onclick="calculatesteriletotal()">Calculate</button>
+                    <span id="steriletotal"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- GIR -->
+                 <div class="row">
+                    <div class="label">GIR</div>
+                    <button onclick="calculateGIR()">Calculate</button>
+                    <span id="girResult"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- Dextrose Concentration -->
+                 <div class="row">
+                    <div class="label">Dextrose Concentration</div>
+                    <button onclick="calculateDextroseConcentration()">Calculate</button>
+                    <span id="dexconcResult"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- Osmolarity -->
+                 <div class="row">
+                    <div class="label">Osmolarity</div>
+                    <button onclick="window.open('https://globalrph.com/medcalcs/osmolarity-calculator-extremely-powerful-tool/', '_blank')">GlobalRPh</button>
+                </div>
+
+                <hr>
+                
+                <!-- Total Calories -->
+                 <div class="row">
+                    <div class="label">Total Calories</div>
+                    <button onclick="calculateTotalCalories()">Calculate</button>
+                    <span id="caloriesResult"></span>
+                </div>
+
+                <hr>
+                
+                <!-- Infusion Rate -->
+                 <div class="row">
+                    <div class="label">Infusion Rate of Aqueous Solution</div>
+                    <button onclick="calculateInfusionRate()">Calculate</button>
+                    <span id="infusionResult"></span>
+                </div>
+
+
+                <hr>
+                
+                <!-- Infusion Rate -->
+                 <div class="row">
+                    <div class="label">Infusion Rate of Lipid Solution</div>
+                    <button onclick="calculateInfusionRatelipid()">Calculate</button>
+                    <span id="infusionResultlipid"></span>
+                </div>
+
+
+                <hr>
+
+                <div class="row">
+                    <div class="label">Requested By</div>
+                    <input type="text" id="request" placeholder="Enter name">
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="label">Calculated By</div>
+                    <input type="text" id="calculated" placeholder="Enter name">
+                 </div>
+
+                 <hr>
+
+                 <div class="row">
+                    <div class="label">Checked By</div>
+                    <input type="text" id="checked" placeholder="Enter name">
+                </div>
+
+                <hr>
+
+
+
+                <div class="row">
+                    <div class="label">Prep. Date</div>
+                    <input type="text" id="prep" placeholder="Enter date">
+                </div>
+
+                <hr>
+
+
+
+                <div class="row">
+                    <div class="label">Ex. Date</div>
+                    <input type="text" id="ex" placeholder="Enter date">
+                </div>
+
+                <hr>
+
+                <div class="b">
+                    <button id="exportBtn" onclick="exportToExcelWithCalculatedValues()">Export to Excel</button>
+                </div>
+
+
+
+                
+
+        </div>
+    </div>
+
+    
+</body>
+</html>
